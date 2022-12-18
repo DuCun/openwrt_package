@@ -44,7 +44,7 @@ else
     esac
     done
 fi
-IMAGE_NAME=${NAME:=openwrt_build}
+IMAGE_NAME=${NAME:=immortalwrt_build}
 BUILD_DIR=$PWD/openwrt_build_tmp
 mkdir -p $BUILD_DIR
 [ ! -f "./configs/$CONFIG.config" ] && echo '错误：configs目录中未找到'$CONFIG'.config配置文件' && exit -1

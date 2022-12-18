@@ -15,7 +15,7 @@ IS_COMPLIE=0
 check_complie_status() {
     COMPLIE_CONFIG=$1
     if [ "$COMPLIE_CONFIG" == "armv8" ];then
-        if ls $OPENWRT_DIR/bin/targets/armvirt/64/openwrt-armvirt-64-default-rootfs.tar.gz 1> /dev/null 2>&1; then
+        if ls $OPENWRT_DIR/bin/targets/armvirt/64/*rootfs.tar.gz 1> /dev/null 2>&1; then
             echo "ARM盒子固件已存在"
             IS_COMPLIE=1
         else
@@ -33,9 +33,9 @@ check_complie_status() {
 
 source $SCRIPT_DIR/package_firmware.sh
 if [ ! -d "$OPENWRT_DIR/.git" ]; then
-    echo '未找到openwrt源码，正在检出源码'
-    git clone https://github.com/coolsnowwolf/lede.git --depth=1 /opt/openwrt_tmp
-    echo 'openwrt源码更新完毕'
+    echo '未找到immortalwrt源码，正在检出源码'
+    git clone https://github.com/immortalwrt/immortalwrt.git --depth=1 /opt/openwrt_tmp
+    echo 'immortalwrt源码更新完毕'
     mv /opt/openwrt_tmp/* $OPENWRT_DIR/ && mv /opt/openwrt_tmp/.* $OPENWRT_DIR/
     cd $OPENWRT_DIR
     chmod +x $SCRIPT_DIR/*.sh
@@ -107,7 +107,7 @@ if [ "$CONFIG" == "armv8" ];then
     echo '当前仓库最新内核版本：'$LATEST_KERNEL_VERSION
     cp -r $KERNEL_DIR/opt/kernel/$LATEST_KERNEL_VERSION/* $KERNEL_DIR/
     echo '开始进行打包'
-    package_firmware $PACKIT_DIR $OPENWRT_DIR/bin/targets/armvirt/64/openwrt-armvirt-64-default-rootfs.tar.gz $DEVICE $SCRIPT_DIR/whoami
+    package_firmware $PACKIT_DIR $OPENWRT_DIR/bin/targets/armvirt/64/*rootfs.tar.gz $DEVICE $SCRIPT_DIR/whoami
     cd $PACKIT_DIR/output/
     [ ! -d "$OUTPUT_DIR" ] && mkdir -p $OUTPUT_DIR
     rm -rf $OUTPUT_DIR/*
